@@ -15,7 +15,7 @@ public class SimpleTest {
 
     public static void main(String[] args) {
 
-        Configuration config = TestHelper.getPropertiesConfiguration("src/main/resources/config.properties");
+        Configuration config = TestHelper.getPropertiesConfiguration();
 
         int counter = 1;
 
@@ -31,7 +31,7 @@ public class SimpleTest {
             try {
                 contentSource = ContentSourceFactory.newContentSource(uri);
             } catch (XccConfigException e) {
-                LOG.error("Unable to create the ContentSource Object "+e);
+                LOG.error("Unable to create the ContentSource Object " + e);
             }
 
             Session session = contentSource.newSession();

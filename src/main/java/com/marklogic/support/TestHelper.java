@@ -13,7 +13,8 @@ public class TestHelper {
 
 	protected static Logger LOG = LoggerFactory.getLogger("TestHelper");
 
-	protected static PropertiesConfiguration getPropertiesConfiguration(String path) {
+	protected static PropertiesConfiguration getPropertiesConfiguration() {
+		String path = "src/main/resources/config.properties";
 		PropertiesConfiguration properties = new PropertiesConfiguration();
 		FileInputStream fis;
 		try {

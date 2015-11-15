@@ -6,9 +6,8 @@ apply plugin: 'groovy'
 apply plugin: 'idea'
 apply plugin: 'java'
 
-mainClassName = 'com.marklogic.support.SimpleTest'
+mainClassName = 'com.marklogic.support.SSLTest'
 sourceCompatibility = 1.7
-
 
 repositories {
 mavenCentral()
@@ -27,12 +26,12 @@ dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.11'
 }
 
-
+/*
 jar {
     manifest {
-        attributes 'Main-Class': 'com.marklogic.support.SimpleTest'
+        attributes 'Main-Class': 'com.marklogic.support.SSLTest'
     }
-}
+}*/
 
 
 task getHomeDir << {
