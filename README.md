@@ -13,3 +13,14 @@ run gradlew
 
 ## Windows ##
 run gradlew.bat
+
+
+## Create the SSH Keys ##
+
+(Incomplete - notes at this stage)
+
+### Create the JKS File From your P12 Keystore ###
+
+ keytool -importkeystore -srckeystore yourhostname.p12 -srcstoretype pkcs12 -destkeystore keystore.jks -deststoretype jks
+
+
