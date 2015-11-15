@@ -1,0 +1,54 @@
+package com.marklogic.support;
+
+import com.marklogic.xcc.*;
+import com.marklogic.xcc.exceptions.RequestException;
+import com.marklogic.xcc.exceptions.XccConfigException;
+import org.apache.commons.configuration.Configuration;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.net.URI;
+import java.net.URISyntaxException;
+
+public class SimpleTest {
+    private static Logger LOG = LoggerFactory.getLogger("SimpleTest");
+
+    public static void main(String[] args) {
+
+        Configuration config = TestHelper.getPropertiesConfiguration("src/main/resources/config.properties");
+
+        int counter = 1;
+
+        URI uri = null;
+        try {
+            uri = new URI(config.getString("XCC_URI"));
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+
+        for (; ; ) {
+            ContentSource contentSource = null;
+            try {
+                contentSource = ContentSourceFactory.newContentSource(uri);
+            } catch (XccConfigException e) {
+                e.printStackTrace();
+            }
+
+            Session session = contentSource.newSession();
+            Request request = session.newAdhocQuery("xdmp:request-timestamp()");
+
+            try {
+                ResultSequence rs;
+                rs = session.submitRequest(request);
+                LOG.debug(counter + " : " + rs.asString());
+            } catch (RequestException e) {
+                e.printStackTrace();
+            }
+
+            session.close();
+            counter++;
+        }
+
+    }
+
+}
