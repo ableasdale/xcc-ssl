@@ -1,5 +1,7 @@
 xquery version "1.0-ml";
 
+(: Configuration Script 3: Create the XDBC Endpoint and configure it for SSL :)
+
 import module namespace admin = "http://marklogic.com/xdmp/admin" at "/MarkLogic/admin.xqy";
 import module namespace pki = "http://marklogic.com/xdmp/pki" at "/MarkLogic/pki.xqy";
 
