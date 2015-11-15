@@ -1,7 +1,7 @@
 # Getting Started #
 
-# Linux / OSX #
+## Linux / OSX ##
 run gradlew
 
-# Windows #
+## Windows ##
 run gradlew.bat
