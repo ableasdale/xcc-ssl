@@ -1,10 +1,12 @@
 group 'xcc-ssl'
 version '1.0-SNAPSHOT'
 
+apply plugin:'application'
 apply plugin: 'groovy'
 apply plugin: 'idea'
 apply plugin: 'java'
 
+mainClassName = 'com.marklogic.support.SimpleTest'
 sourceCompatibility = 1.7
 
 

@@ -31,7 +31,7 @@ public class SimpleTest {
             try {
                 contentSource = ContentSourceFactory.newContentSource(uri);
             } catch (XccConfigException e) {
-                e.printStackTrace();
+                LOG.error("Unable to create the ContentSource Object "+e);
             }
 
             Session session = contentSource.newSession();
