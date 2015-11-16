@@ -2,7 +2,24 @@
 
 ## Install Oracle JDK 7 ##
 
-Add notes for this...
+```bash
+rpm -Uvh /path/to/binary/jdk-7u80-linux-x64.rpm
+
+alternatives --install /usr/bin/java java /usr/java/jdk1.7.0_80/jre/bin/java 200000
+alternatives --install /usr/bin/javaws javaws /usr/java/jdk1.7.0_80/jre/bin/javaws 200000
+alternatives --install /usr/lib/mozilla/plugins/libjavaplugin.so libjavaplugin.so /usr/java/jdk1.7.0_80/jre/lib/i386/libnpjp2.so 200000
+alternatives --install /usr/lib64/mozilla/plugins/libjavaplugin.so libjavaplugin.so.x86_64 /usr/java/jdk1.7.0_80/jre/lib/amd64/libnpjp2.so 200000
+alternatives --install /usr/bin/javac javac /usr/java/jdk1.7.0_80/bin/javac 200000
+alternatives --install /usr/bin/jar jar /usr/java/jdk1.7.0_80/bin/jar 200000
+
+alternatives --config java
+alternatives --config javaws
+alternatives --config libjavaplugin.so.x86_64
+alternatives --config javac
+
+# THEN ADD TO BASH PROFILE
+export JAVA_HOME="/usr/java/jdk1.7.0_80"
+```
 
 ### Configure JCE ###
 http://www.oracle.com/technetwork/java/javase/downloads/jce-7-download-432124.html
