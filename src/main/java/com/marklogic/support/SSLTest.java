@@ -63,7 +63,7 @@ public class SSLTest {
     }
 
     protected static SecurityOptions newTrustOptions(String certLocation) throws Exception {
-        KeyStore clientKeyStore = KeyStore.getInstance("JKS");
+        KeyStore clientKeyStore = KeyStore.getInstance(config.getString("KEYSTORE_TYPE"));
         clientKeyStore.load(new FileInputStream(certLocation), config.getString("KEY_PASSWD").toCharArray());
         KeyManagerFactory keyManagerFactory = KeyManagerFactory.getInstance("SunX509");
         keyManagerFactory.init(clientKeyStore, config.getString("KEY_PASSWD").toCharArray());
