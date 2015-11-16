@@ -8,11 +8,13 @@ Add notes for this...
 http://www.oracle.com/technetwork/java/javase/downloads/jce-7-download-432124.html
 
 ## Linux / OSX ##
+```
 ./gradlew run
-
+```
 ## Windows ##
+```
 gradlew.bat run
-
+```
 ## Creating the SSH Keys ##
 
 ### PKCS #12 ###
