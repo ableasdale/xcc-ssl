@@ -51,11 +51,10 @@ public class SSLTest {
     public static void main(String[] args) throws Exception {
         LOG.info("Starting SSL test");
         config = TestHelper.getPropertiesConfiguration();
-
         long count = 1L;
 
         while (true) {
-            LOG.info("Test " + count);
+            LOG.info(String.format("Test %d", count));
             run();
             ++count;
         }
