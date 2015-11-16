@@ -6,3 +6,4 @@ build/
 .classpath
 .project
 xcc-ssl.i*
+src/main/resources/*.jks
