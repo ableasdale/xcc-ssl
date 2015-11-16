@@ -15,12 +15,18 @@ gradlew.bat run
 
 ## Creating the SSH Keys ##
 
-(Incomplete - notes at this stage)
+### PKCS #12 ###
+https://docs.oracle.com/cd/E19509-01/820-3503/ggfhb/index.html
 
-### Create the JKS File From your P12 Keystore ###
+### JKS ###
+https://docs.oracle.com/cd/E19509-01/820-3503/ggfen/index.html
+
+### Converting a PKCS #12  Keystore to a JKS File ###
+
 ```
 keytool -importkeystore -srckeystore yourhostname.p12 -srcstoretype pkcs12 -destkeystore keystore.jks -deststoretype jks
 ```
+
 ## Configuring MarkLogic Server ##
 
 There are 4 XQuery modules in src/main/resources/xquery that can be used as templates for configuring MarkLogic for SSL.  You will need to run them in the order described below:
