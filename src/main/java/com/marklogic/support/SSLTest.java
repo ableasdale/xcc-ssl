@@ -35,7 +35,7 @@ public class SSLTest {
     }
 
     public static TrustManager[] getTrust() throws Exception {
-        TrustManager[] trust = new TrustManager[]{new X509TrustManager() {
+        return new TrustManager[]{new X509TrustManager() {
             public X509Certificate[] getAcceptedIssuers() {
                 return new X509Certificate[0];
             }
@@ -46,7 +46,6 @@ public class SSLTest {
             public void checkServerTrusted(X509Certificate[] certs, String authType) throws CertificateException {
             }
         }};
-        return trust;
     }
 
     public static void main(String[] args) throws Exception {
