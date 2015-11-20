@@ -13,8 +13,8 @@ applicationDefaultJvmArgs = ["-Djava.util.logging.config.file=${rootDir}/xcc.log
 
 repositories {
     jcenter()
-    maven { url "http://developer.marklogic.com/maven2" }
-    // flatDir { dirs "libs"  }
+    // maven { url "http://developer.marklogic.com/maven2" }
+    flatDir { dirs "libs"  }
 }
 
 dependencies {

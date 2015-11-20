@@ -1,8 +1,9 @@
 package com.marklogic.support;
 
 import com.marklogic.xcc.*;
+
+import java.util.logging.Logger;
 import org.apache.commons.configuration.Configuration;
-import org.slf4j.LoggerFactory;
 
 import javax.net.ssl.*;
 import java.io.FileInputStream;
@@ -17,12 +18,15 @@ public class SSLTest {
     private static Configuration config;
     private static SecurityOptions so;
     private static String xccUrl;
-    private static org.slf4j.Logger LOG = LoggerFactory.getLogger("SSLTest");
+    static Logger LOG = Logger.getLogger(SSLTest.class.getName());
 
     public static void run() throws Exception {
-
+        int errCount=0;
+        try {
         xccUrl = config.getString("SSL_XCC_URI");
-        String certLocation = config.getString("JKS_FILE");
+         String certLocation = config.getString("JKS_FILE");
+         so = newTrustOptions(certLocation);
+
         so = newTrustOptions(certLocation);
         so.setEnabledCipherSuites(new String[]{"TLS_RSA_WITH_AES_128_CBC_SHA"});
         so.setEnabledProtocols(new String[]{"TLSv1.2"});
@@ -30,22 +34,43 @@ public class SSLTest {
         ContentSource cs = ContentSourceFactory.newContentSource(new URI(xccUrl), so);
         Session session = cs.newSession();
         AdhocQuery request = session.newAdhocQuery("xdmp:request-timestamp()");
-        session.submitRequest(request);
+        ResultSequence result = session.submitRequest(request);
+        result.close();
         session.close();
+        cs.getConnectionProvider().shutdown(null);
+        } catch (Throwable t) {
+            t.printStackTrace();
+            errCount++;
+        }
     }
-
-    public static TrustManager[] getTrust() throws Exception {
-        return new TrustManager[]{new X509TrustManager() {
+    public static TrustManager[] getTrust(final KeyManager[] key ) throws Exception {
+        TrustManager[] trust = new TrustManager[]{new X509TrustManager() {
             public X509Certificate[] getAcceptedIssuers() {
-                return new X509Certificate[0];
+              String alias =   "devemeil-client.atnea.com";
+              LOG.info("getAcceptedIssures");
+              for( KeyManager k : key ){
+                  if( k instanceof X509KeyManager ){
+                    X509Certificate c[] = ((X509KeyManager)k).getCertificateChain(alias);
+                    LOG.info("Found issures:" + (c == null ? "null" : String.valueOf(c.length))); 
+                    return c;
+                  }
+                }
+              return null;
             }
 
             public void checkClientTrusted(X509Certificate[] certs, String authType) throws CertificateException {
+              for( X509Certificate c : certs )
+                LOG.info("checking trusted client cert of type: " + authType + "\n" );
             }
 
             public void checkServerTrusted(X509Certificate[] certs, String authType) throws CertificateException {
+              for( X509Certificate c : certs ){
+                LOG.info("checking trusted server cert:type: " + authType + "\n" );
+
+              }
             }
         }};
+        return trust;
     }
 
     public static void main(String[] args) throws Exception {
@@ -54,20 +79,20 @@ public class SSLTest {
         long count = 1L;
 
         while (true) {
-            LOG.info(String.format("Test %d", count));
+            LOG.info("Test " + count);
             run();
             ++count;
         }
     }
 
     protected static SecurityOptions newTrustOptions(String certLocation) throws Exception {
-        KeyStore clientKeyStore = KeyStore.getInstance(config.getString("KEYSTORE_TYPE"));
-        clientKeyStore.load(new FileInputStream(certLocation), config.getString("KEY_PASSWD").toCharArray());
+        KeyStore clientKeyStore = KeyStore.getInstance("JKS");
+        clientKeyStore.load( SSLTest.class.getResourceAsStream(certLocation), config.getString("KEY_PASSWD").toCharArray());
         KeyManagerFactory keyManagerFactory = KeyManagerFactory.getInstance("SunX509");
         keyManagerFactory.init(clientKeyStore, config.getString("KEY_PASSWD").toCharArray());
         KeyManager[] key = keyManagerFactory.getKeyManagers();
         SSLContext sslContext = SSLContext.getInstance("SSLv3");
-        sslContext.init(key, getTrust(), (SecureRandom) null);
+        sslContext.init(key, getTrust(key), (SecureRandom) null);
         return new SecurityOptions(sslContext);
     }
 }
