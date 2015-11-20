@@ -3,16 +3,18 @@ version '1.0-SNAPSHOT'
 
 apply plugin:'application'
 apply plugin: 'groovy'
-apply plugin: 'idea'
 apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
 
 mainClassName = 'com.marklogic.support.SSLTest'
 sourceCompatibility = 1.7
+applicationDefaultJvmArgs = ["-Djava.util.logging.config.file=${rootDir}/xcc.logging.properties"]
 
 repositories {
-mavenCentral()
     jcenter()
     maven { url "http://developer.marklogic.com/maven2" }
+    // flatDir { dirs "libs"  }
 }
 
 dependencies {
@@ -21,19 +23,21 @@ dependencies {
     compile 'ch.qos.logback:logback-classic:1.1.3'
     compile 'org.slf4j:slf4j-api:1.7.13'
     compile 'commons-configuration:commons-configuration:1.10'
-
     compile 'org.codehaus.groovy:groovy-all:2.3.11'
     testCompile group: 'junit', name: 'junit', version: '4.11'
 }
 
-/*
-jar {
-    manifest {
-        attributes 'Main-Class': 'com.marklogic.support.SSLTest'
-    }
-}*/
 
+run {
+    standardInput = System.in
+}
 
 task getHomeDir << {
     println gradle.gradleHomeDir
 }
+cleanEclipse <<  {
+    delete "${rootDir}/bin"
+    delete "${rootDir}/.settings"
+    delete "${rootDir}/.idea"
+}
+clean.dependsOn cleanEclipse
