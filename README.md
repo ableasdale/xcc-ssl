@@ -50,10 +50,10 @@ keytool -importkeystore -srckeystore yourhostname.p12 -srcstoretype pkcs12 -dest
 
 There are 4 XQuery modules in src/main/resources/xquery that can be used as templates for configuring MarkLogic for SSL.  You will need to run them in the order described below:
 
-- insert-template.xqy
-- setup-certificates.xqy
-- create-xdbc-server.xqy
-- configure-certs-with-app-server.xqy
+- 1-insert-template.xqy
+- 2-setup-certificates.xqy
+- 3-create-xdbc-server.xqy
+- 4-configure-certs-with-app-server.xqy
 
 
 
