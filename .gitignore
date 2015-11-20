@@ -7,3 +7,4 @@ build/
 .project
 xcc-ssl.i*
 src/main/resources/*.jks
+src/main/resources/*.properties
