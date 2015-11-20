@@ -1,13 +1,12 @@
 package com.marklogic.support;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.IOException;
+import java.io.InputStream;
 
 public class TestHelper {
 
@@ -15,12 +14,12 @@ public class TestHelper {
 
 	protected static PropertiesConfiguration getPropertiesConfiguration() {
 
-		String path = "src/main/resources/config.properties";
+		String path = "/config.properties";
 		PropertiesConfiguration properties = new PropertiesConfiguration();
-		FileInputStream fis;
+		InputStream fis;
 
 		try {
-			fis = new FileInputStream(path);
+			fis = PropertiesConfiguration.class.getResourceAsStream(path);
 			try {
 				properties.load(fis);
 			} catch (ConfigurationException e) {
@@ -32,7 +31,7 @@ public class TestHelper {
 					LOG.error(String.format("Failed to close the properties file [%s]", path), e);
 				}
 			}
-		} catch (FileNotFoundException e) {
+		} catch (Exception e) {
 			LOG.error(String.format("Failed to load properties file [%s]", path), e);
 		}
 		return properties;
