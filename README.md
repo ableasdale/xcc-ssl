@@ -30,11 +30,11 @@ http://www.oracle.com/technetwork/java/javase/downloads/jce-7-download-432124.ht
 ```
 ./gradlew run
 ```
-### Running: Windows (CMD)
+### Windows (CMD)
 ```
 gradlew.bat run
 ```
-### Running: Windows (PowerShell)
+### Windows (PowerShell)
 ```
 .\gradlew run
 ```
@@ -80,7 +80,7 @@ What is the two-letter country code for this unit?
 Is CN=www.marklogic.com, OU=Support, O=MarkLogic Corporation, L=San Carlos, ST=California, C=US correct?
   [no]:  yes
 
-Enter key password for <replserver>
+Enter key password for <client>
         (RETURN if same as keystore password):
 Re-enter new password:
 ```
@@ -116,5 +116,13 @@ There are 4 XQuery modules in src/main/resources/xquery that can be used as temp
 - 3-create-xdbc-server.xqy
 - 4-configure-certs-with-app-server.xqy
 
+When you run the application, you should see something like this:
 
+```log
+22:59:26.131 [main] INFO com.marklogic.support.SSLTest - Starting SSL test
+22:59:26.181 [main] INFO com.marklogic.support.SSLTest - Test 1
+22:59:26.186 [main] DEBUG com.marklogic.support.SSLTest - SSL URI: xccs://admin:admin@localhost:9995
+22:59:26.186 [main] DEBUG com.marklogic.support.SSLTest - Certificate Location is: src/main/resources/keystore.jks
+22:59:26.513 [main] INFO com.marklogic.support.SSLTest - Result: 15095771404323455
+```
 
