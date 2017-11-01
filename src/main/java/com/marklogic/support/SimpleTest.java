@@ -7,11 +7,12 @@ import org.apache.commons.configuration.Configuration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.lang.invoke.MethodHandles;
 import java.net.URI;
 import java.net.URISyntaxException;
 
 public class SimpleTest {
-    private static Logger LOG = LoggerFactory.getLogger("SimpleTest");
+    private static Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
     public static void main(String[] args) {
 
@@ -23,15 +24,15 @@ public class SimpleTest {
         try {
             uri = new URI(config.getString("XCC_URI"));
         } catch (URISyntaxException e) {
-            e.printStackTrace();
+            LOG.error("Unable to create a valid URI (from XCC_URI in resources/config.properties): ",e);
         }
 
-        for (; ; ) {
+        for (; ;) {
             ContentSource contentSource = null;
             try {
                 contentSource = ContentSourceFactory.newContentSource(uri);
             } catch (XccConfigException e) {
-                LOG.error("Unable to create the ContentSource Object " + e);
+                LOG.error("Unable to create the ContentSource Object: ",e);
             }
 
             Session session = contentSource.newSession();
